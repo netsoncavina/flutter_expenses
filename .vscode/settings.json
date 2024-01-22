@@ -1,0 +1,9 @@
+{
+  "[dart]": {
+    "editor.rulers": [
+      150
+    ],
+  },
+  "dart.debugExternalLibraries": true,
+  "dart.debugSdkLibraries": true,
+}
