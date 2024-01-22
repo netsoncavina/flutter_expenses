@@ -33,7 +33,6 @@ class MyHomePage extends StatelessWidget {
           backgroundColor: Colors.blue[300],
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Card(
@@ -43,6 +42,8 @@ class MyHomePage extends StatelessWidget {
             Column(
               children: _transactions.map((transaction) {
                 return Card(
+                  color: Colors.white,
+                  elevation: 1,
                   child: Row(
                     children: [
                       Container(
@@ -89,7 +90,37 @@ class MyHomePage extends StatelessWidget {
                   ),
                 );
               }).toList(),
-            )
+            ),
+            Card(
+                color: Colors.white,
+                elevation: 1,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    children: <Widget>[
+                      TextField(decoration: InputDecoration(labelText: 'Título')),
+                      TextField(
+                        decoration: InputDecoration(
+                          labelText: 'Valor (R\$)',
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            child: Text(
+                              'Nova Transação',
+                              style: TextStyle(
+                                color: Colors.purple,
+                              ),
+                            ),
+                            onPressed: () {},
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ))
           ],
         ));
   }
