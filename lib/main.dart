@@ -56,6 +56,12 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.of(context).pop();
   }
 
+  _deleteTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((transaction) => transaction.id == id);
+    });
+  }
+
   List<Transaction> get _recentTransactions {
     return _transactions.where((transaction) {
       return transaction.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
@@ -91,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Chart(_recentTransactions),
-            TransactionList(transactions: _transactions) // TransactionUser()
+            TransactionList(transactions: _transactions, onDelete: _deleteTransaction) // TransactionUser()
           ],
         ),
       ),
