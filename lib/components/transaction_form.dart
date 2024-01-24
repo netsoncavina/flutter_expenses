@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
   final void Function(String, double) onSubmit;
@@ -11,8 +12,8 @@ class TransactionForm extends StatefulWidget {
 
 class _TransactionFormState extends State<TransactionForm> {
   final titleController = TextEditingController();
-
   final valueController = TextEditingController();
+  DateTime? selectedDate;
 
   _submitForm() {
     final title = titleController.text;
@@ -29,6 +30,23 @@ class _TransactionFormState extends State<TransactionForm> {
   clearTextFields() {
     titleController.clear();
     valueController.clear();
+  }
+
+  _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2024),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      if (pickedDate == null) {
+        return;
+      }
+
+      setState(() {
+        selectedDate = pickedDate;
+      });
+    });
   }
 
   @override
@@ -49,14 +67,39 @@ class _TransactionFormState extends State<TransactionForm> {
                   labelText: 'Valor (R\$)',
                 ),
               ),
+              SizedBox(
+                height: 70,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        selectedDate != null ? "Data Selecionada: ${DateFormat('dd/MM/y').format(selectedDate!)}" : "Nenhuma data selecionada!",
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: _showDatePicker,
+                      child: const Text(
+                        'Selecionar Data',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                    ),
                     child: const Text(
                       'Nova Transação',
                       style: TextStyle(
-                        color: Colors.purple,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     onPressed: () {
