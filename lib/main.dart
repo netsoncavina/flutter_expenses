@@ -1,3 +1,4 @@
+import 'package:expenses/components/chart.dart';
 import 'package:expenses/components/transaction_form.dart';
 import 'package:expenses/components/transaction_list.dart';
 import 'package:expenses/models/transaction.dart';
@@ -47,8 +48,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
-    // Transaction(id: 't1', title: 'Novo Tênis de Corrida', value: 310.76, date: DateTime.now()),
-    // Transaction(id: 't2', title: 'Conta de Luz', value: 211.30, date: DateTime.now()),
+    Transaction(id: 't1', title: 'Novo Tênis de Corrida', value: 310.76, date: DateTime.now().subtract(const Duration(days: 3))),
+    Transaction(id: 't2', title: 'Conta de Luz', value: 211.30, date: DateTime.now().subtract(const Duration(days: 4))),
   ];
 
   _addTransaction(String title, double value) {
@@ -58,6 +59,12 @@ class _MyHomePageState extends State<MyHomePage> {
       _transactions.add(newTransaction);
     });
     Navigator.of(context).pop();
+  }
+
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((transaction) {
+      return transaction.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
+    }).toList();
   }
 
   _openTransactionFormModal(BuildContext context) {
@@ -88,10 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Card(
-              elevation: 5,
-              child: Text('Gráfico'),
-            ),
+            Chart(_recentTransactions),
             TransactionList(transactions: _transactions) // TransactionUser()
           ],
         ),
