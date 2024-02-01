@@ -51,65 +51,69 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        color: Colors.white,
-        elevation: 1,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: <Widget>[
-              TextField(controller: titleController, onSubmitted: (_) => _submitForm(), decoration: const InputDecoration(labelText: 'Título')),
-              TextField(
-                controller: valueController,
-                onSubmitted: (_) => _submitForm(),
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                decoration: const InputDecoration(
-                  labelText: 'Valor (R\$)',
-                ),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: 10,
+          right: 10,
+          left: 10,
+          bottom: 10 + MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Column(
+          children: <Widget>[
+            TextField(controller: titleController, onSubmitted: (_) => _submitForm(), decoration: const InputDecoration(labelText: 'Título')),
+            TextField(
+              controller: valueController,
+              onSubmitted: (_) => _submitForm(),
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              decoration: const InputDecoration(
+                labelText: 'Valor (R\$)',
               ),
-              SizedBox(
-                height: 70,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        selectedDate != null ? "Data Selecionada: ${DateFormat('dd/MM/y').format(selectedDate)}" : "Nenhuma data selecionada!",
-                      ),
+            ),
+            SizedBox(
+              height: 70,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      selectedDate != null ? "Data Selecionada: ${DateFormat('dd/MM/y').format(selectedDate)}" : "Nenhuma data selecionada!",
                     ),
-                    TextButton(
-                      onPressed: _showDatePicker,
-                      child: const Text(
-                        'Selecionar Data',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                    ),
+                  ),
+                  TextButton(
+                    onPressed: _showDatePicker,
                     child: const Text(
-                      'Nova Transação',
+                      'Selecionar Data',
                       style: TextStyle(
-                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    onPressed: () {
-                      _submitForm();
-                    },
                   ),
                 ],
-              )
-            ],
-          ),
-        ));
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                  ),
+                  child: const Text(
+                    'Nova Transação',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: () {
+                    _submitForm();
+                  },
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
